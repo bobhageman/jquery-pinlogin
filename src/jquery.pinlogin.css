@@ -1,0 +1,45 @@
+
+
+.pinlogin .pinlogin-field
+{
+	box-sizing:border-box;
+	
+	display:inline-block;
+	
+	width: 40px;
+	height: 40px;
+	
+	padding: 5px;
+	
+	margin: 0 10px;
+	
+	border:1px solid #ccc;
+	
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;	
+	border-radius: 2px;
+	
+	text-align:center;
+
+}
+
+.pinlogin .pinlogin-field:first-of-type {
+    margin-left: 0;
+}
+
+.pinlogin .pinlogin-field:last-of-type {
+    margin-right: 0;
+}
+
+.pinlogin .pinlogin-field:read-only
+{
+	border:1px solid #ddd;
+	background:#fafafa;
+	cursor:default;
+}
+
+.pinlogin .pinlogin-field.invalid
+{
+	border:1px solid red;
+	color:red;
+}

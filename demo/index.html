@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Pinlogin - demo</title>
+		
+		<!-- To display the special character as placeholder correctly -->
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		
+		<!-- include jQuery -->
+		<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+		
+		<!-- include jQuery Pinlogin plugin -->
+		<script src="../src/jquery.pinlogin.js"></script>
+		<link href="../src/jquery.pinlogin.css" rel="stylesheet" type="text/css" />
+		
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+	
+		<div class="container">
+	
+			<h1>Enter PIN</h1>
+		
+			<div id="pinwrapper"></div>
+		
+		</div>
+		
+		<script type="text/javascript">
+			$(function(){
+				$('#pinwrapper').pinlogin({
+					fields : 5,
+					
+					complete : function(pin){
+						alert ('Awesome! You entered: ' + pin);
+						
+						// further processing here
+					},
+					
+					/* Additional callbacks */
+					/*
+					invalid : function (field, nr)
+					{
+						console.log (nr + ' is invalid');
+					},
+					
+					keydown : function (e, field, nr)
+					{
+						console.log (nr + ' keydown');
+					},	
+
+					input : function (e, field, nr)
+					{
+						console.log (nr + ' input');
+					}*/					
+					
+				});				
+			});
+		</script>
+	</body>
+</html>

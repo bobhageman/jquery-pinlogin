@@ -1,0 +1,41 @@
+{
+  "name": "jquery-pinlogin",
+  "version": "1.0.0",
+  "description": "jQuery plugin to create a cross-device pincode login input experience",
+  "keywords": [
+    "jquery-plugin",
+    "jquery",
+    "plugins",
+    "pincode",
+    "login"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/b.hageman/jquery-pinlogin.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/b.hageman/jquery-pinlogin/issues"
+  },
+  "author": {
+    "name": "Bob Hageman",
+    "email": "bob@mybo.nu",
+    "url": "https://gitlab.com/b.hageman"
+  },
+  "homepage": "https://www.mybo.nu",
+  "contributors": [
+    {
+      "name": "Bob Hageman",
+      "email": "bob@mybo.nu",
+      "url": "https://gitlab.com/b.hageman"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "jscs": "jscs src",
+    "test": "npm run jscs && grunt travis --verbose"
+  }
+}
