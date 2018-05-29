@@ -6,11 +6,13 @@ The number of pincode input fields are configurable. After entering a complete p
 Lightly inspired by [bootstrap-pincode-input](https://github.com/fkranenburg/bootstrap-pincode-input) from fkranenburg
 
 ## Demo
-A screenshot of the plugins input fields:
+A screenshot of the plugins input fields:   
 ![screenshot](https://gitlab.com/b.hageman/jquery-pinlogin/raw/master/demo/example.png)
 
-For a working example go to:
-[site]https://www.mybo.nu/static/jquery-pinlogin/
+For a working example go to:   
+https://www.mybo.nu/static/jquery-pinlogin/   
+
+Or go to the `demo` folder and view the contents of the `index.html` file.   
 
 ## Install
 
@@ -63,9 +65,9 @@ String. Default `•`
 
 Contains the placeholder that's displayed instead of the entered digits. You can use special characters, but if you do make sure your HTML page is properly encoded. For example UTF8:
 
-	```html
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	```
+```html
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+```
 
 ### autofocus
 Boolean. Default `true`.   
