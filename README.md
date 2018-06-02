@@ -17,9 +17,10 @@ Or go to the `demo` folder and view the contents of the `index.html` file.
 ## Install
 
 ### NPM
-todo
+Install with one simple command in your project using [npm](https://www.npmjs.com/):   
+`npm install --save jquery-pinlogin`   
 
-### Manually by inluding scripts
+### Manually by including scripts
 
 1. Include jQuery:
 
