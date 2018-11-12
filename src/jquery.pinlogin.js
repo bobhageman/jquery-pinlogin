@@ -15,6 +15,7 @@
 		placeholder : '•',				// character that's displayed after entering a number in a field
 		autofocus : true,				// focus on the first field at loading time
 		hideinput : true,				// hide the input digits and replace them with placeholder
+		reset: true,					// resets all fields when completely filled
 		complete : function(pin){		// fires when all fields are filled in 
 			// pin	:	the entered pincode
 		},
@@ -211,6 +212,9 @@
 			// reset the saved value and input fields
 			_reset : function()
 			{
+				if (!this.settings.reset)
+					return;
+
 				this._values = new Array(this.settings.fields);
 				
 				this._container.children('input').each(function(index){
