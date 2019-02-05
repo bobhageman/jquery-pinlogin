@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Bob Hageman (https://gitlab.com/b.hageman)
  * Licensed under the MIT (http://www.opensource.org/licenses/mit-license)
  *
- * Version 1.0.0
+ * Version 1.0.3
  */
 ;( function( $, window, document, undefined ) {
 	
@@ -15,7 +15,7 @@
 		placeholder : '•',				// character that's displayed after entering a number in a field
 		autofocus : true,				// focus on the first field at loading time
 		hideinput : true,				// hide the input digits and replace them with placeholder
-		reset: true,					// resets all fields when completely filled
+		reset : true,					// resets all fields when completely filled
 		complete : function(pin){		// fires when all fields are filled in 
 			// pin	:	the entered pincode
 		},
@@ -63,7 +63,7 @@
 				//this.yourOtherFunction( "jQuery Boilerplate" );
 				this._values = new Array(this.settings.fields); // keeping track of the entered values
 	
-				this._container = $('<div />').attr({
+				this._container = $('<div />').prop({
 					'id' : this._name,
 					'class' : this._name
 				});
@@ -81,14 +81,14 @@
 				$(this.element).append(this._container);
 				
 				// reset all fields to starting state
-				this._reset();
+				this.reset();
 			},
 			
 			// create a single input field
 			_createInput : function(id, nr)
 			{
-				var inp = $('<input>').attr({
-					'type' : 'text',
+				return $('<input>').prop({
+					'type' : 'tel',				// Thanks to Manuja Jayawardana (https://gitlab.com/mjayawardana) this is 'tel' and not 'text'!:)
 					'id': id,
 					'name': id,
 					'maxlength': 1,
@@ -98,8 +98,6 @@
 					'autocomplete' : 'off',
 					'class' : 'pinlogin-field'
 				});
-				
-				return inp;
 			},
 			
 			// attach events to the field
@@ -119,7 +117,7 @@
 				field.on('input', $.proxy(function(e){
 					
 					// validate input pattern
-					var pattern = new RegExp($(this).attr('pattern'));
+					var pattern = new RegExp($(this).prop('pattern'));
 					if (!$(this).val().match(pattern)) {
 		
 						$(this)
@@ -152,10 +150,10 @@
 					if (nr < (that.settings.fields-1))
 					{
 						// make next field editable
-						that._getField(nr + 1).removeAttr('readonly');
+						that._getField(nr + 1).removeProp('readonly');
 						
 						// set focus to the next field
-						that._focus(nr + 1);
+						that.focus(nr + 1);
 					}
 					// and when you're done
 					else
@@ -163,7 +161,8 @@
 						var pin = that._values.join('');
 						
 						// reset the plugin
-						that._reset();
+						if (that.settings.reset)
+							that.reset();
 						
 						// fire complete callback
 						that.settings.complete(pin);
@@ -179,10 +178,10 @@
 					// when user goes back
 					if ((e.keyCode == 37 || e.keyCode == 8) && nr > 0) // arrow back, backspace
 					{
-						that._resetField(nr);
+						that.resetField(nr);
 
 						// set focus to previous input
-						that._focus(nr-1);
+						that.focus(nr-1);
 						
 						e.preventDefault();
 						e.stopPropagation(); 						
@@ -204,17 +203,15 @@
 			},
 			
 			// focus on the input field object
-			_focus : function(nr)
+			focus : function(nr)
 			{
+				this.enableField(nr);	// make sure its enabled
 				this._getField(nr).focus();
 			},
 			
 			// reset the saved value and input fields
-			_reset : function()
+			reset : function()
 			{
-				if (!this.settings.reset)
-					return;
-
 				this._values = new Array(this.settings.fields);
 				
 				this._container.children('input').each(function(index){
@@ -223,35 +220,71 @@
 
 					if (index > 0)
 						$(this)
-							.attr('readonly', true)
+							.prop('readonly', true)
 							.removeClass('invalid');
 				});
 		
 				// focus on first field
 				if (this.settings.autofocus)
-					this._focus(0);
+					this.focus(0);
 			},
 			
 			// reset a single field
-			_resetField : function(nr)
+			resetField : function(nr)
 			{
 				this._values[nr] = '';
 				this._getField(nr)
 					.val('')
-					.attr('readonly',true)
+					.prop('readonly',true)
 					.removeClass('invalid');
-			}
+			},
+			
+			// disable all fields
+			disable : function()
+			{
+				
+				//console.log('disable all fields');
+				this._container.children('input').each(function(index){
+					$(this).prop('readonly', true);
+				});
+			},
+			
+			// disable specified field
+			disableField : function(nr)
+			{
+				this._getField(nr).prop('readonly', true);
+				
+			},
+			
+			// enable all fields
+			enable : function()
+			{
+				this._container.children('input').each(function(index){
+					$(this).prop('readonly', false);
+				});				
+				
+			},
+			
+			// enable specified field
+			enableField : function(nr)
+			{
+				this._getField(nr).prop('readonly', false);
+				
+			}			
 		});
 
 		// A really lightweight plugin wrapper around the constructor,
-		// preventing against multiple instantiations
-		$.fn[ pluginName ] = function( options ) {
-			return this.each( function() {
-				if ( !$.data( this, "plugin_" + pluginName ) ) {
-					$.data( this, "plugin_" +
-						pluginName, new Plugin( this, options ) );
-				}
-			} );
+		$.fn[pluginName] = function (options) {
+		  var plugin;
+		  this.each(function() {
+			plugin = $.data(this, 'plugin_' + pluginName);
+			if (!plugin) {
+			  plugin = new Plugin(this, options);
+			  $.data(this, 'plugin_' + pluginName, plugin);
+			}
+		  });
+		  return plugin;
 		};
+
 		
 } )( jQuery, window, document );

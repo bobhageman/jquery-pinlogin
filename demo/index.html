@@ -3,14 +3,17 @@
 	<head>
 		<title>jQuery Pinlogin - demo</title>
 		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
 		<!-- To display the special character as placeholder correctly -->
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		
-		<!-- include jQuery -->
-		<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+		<!-- include jQuery 
+		<script src="../node_modules/jquery/dist/jquery.min.js"></script> -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		
 		<!-- include jQuery Pinlogin plugin -->
-		<script src="../src/jquery.pinlogin.js"></script>
+		<script src="../dist/jquery.pinlogin.min.js"></script>
 		<link href="../src/jquery.pinlogin.css" rel="stylesheet" type="text/css" />
 		
 		<link href="style.css" rel="stylesheet" type="text/css" />
@@ -19,19 +22,34 @@
 	
 		<div class="container">
 	
-			<h1>Enter PIN</h1>
+			<h1>Login with PIN</h1>
+			<div id="loginpin"></div>
+			<br />
+			<br />
 		
-			<div id="pinwrapper"></div>
-		
+			<h1>Register with PIN</h1>
+
+			<div id="registerpin"></div>
+			<br />
+			<div id="registerpinretype"></div>
 		</div>
 		
 		<script type="text/javascript">
 			$(function(){
-				$('#pinwrapper').pinlogin({
+			
+				// ---- Single pincode input -----
+			
+				var loginpin = $('#loginpin').pinlogin({
 					fields : 5,
 					
 					complete : function(pin){
 						alert ('Awesome! You entered: ' + pin);
+						
+						// reset the inputs
+						loginpin.reset();
+						
+						// disable the inputs
+						loginpin.disable();
 						
 						// further processing here
 					},
@@ -51,9 +69,71 @@
 					input : function (e, field, nr)
 					{
 						console.log (nr + ' input');
-					}*/					
+					}*/	
 					
-				});				
+				});	
+
+				// ---- Pincode input with retype functionality ----- 
+
+				var pincode = '';
+				var registerpin = $('#registerpin').pinlogin({
+					placeholder : '*',
+					reset : false,
+					autofocus : false,
+					complete : function(pin){
+
+						pincode = pin;
+						
+						// focus repeat instance 
+						registerpinretype.focus(0);
+						
+						// disable this instance
+						registerpin.disable();					
+					}	
+				});
+				
+				var registerpinretype = $('#registerpinretype').pinlogin({
+					placeholder : '*',
+					reset : false,
+					autofocus : false,
+					complete : function(pin){
+						
+						// compare entered pincodes
+						if (pincode != pin)
+						{
+							pincode = '';
+							
+							// reset both instances
+							registerpin.reset();
+							registerpinretype.reset();
+							
+							// disable repeat instance
+							registerpinretype.disable(); 
+							
+							// set focus to first instance again
+							registerpin.focus(0);
+							
+							alert ('Pincodes do not match, please try again');
+						}
+						else
+						{
+							alert ('Awesome! You entered: ' + pin);
+							
+							// reset both instances
+							registerpin.reset();
+							registerpinretype.reset(); 
+							
+							// disable both instances
+							registerpin.disable();
+							registerpinretype.disable(); 
+							
+							// further processing here
+						}
+					}
+				});	
+
+				// disable repeat instance at start
+				registerpinretype.disable();				
 			});
 		</script>
 	</body>
