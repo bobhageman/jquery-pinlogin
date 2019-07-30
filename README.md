@@ -1,3 +1,8 @@
+> **[DEPRECATED]** I rewrote the plugin to work with and without jQuery and added many improvements. Please use the improved version of Pinlogin:
+> - [Pinlogin on GitHub](https://github.com/bobhageman/pinlogin)
+> - [Pinlogin on NPM](https://www.npmjs.com/package/pinlogin)
+---
+
 # jQuery Pinlogin
 jQuery plugin to create a cross-device pincode login experience. 
 
